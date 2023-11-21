@@ -7,16 +7,22 @@ export default function TaskForm(props){
    
     //bien podría ser un componente en sí.
     const inputTarea=(propiedad)=>{
-        return <input onChange={(e)=>{
-            setMiTarea({...miTarea, [propiedad]:e.target.value})
-        }} value={miTarea[propiedad]}></input>
+        return <div key={"PROP_"+propiedad}>
+            <label>{`${propiedad}: `}</label>
+            <input onChange={(e)=>{
+                setMiTarea({...miTarea, [propiedad]:e.target.value})
+            }} value={miTarea[propiedad]}></input>
+        </div>
+    }
+    const onSubmitForm=(e)=>{
+        miTarea.id?editarTarea(miTarea):agregarTarea(miTarea); onCerrar()
     }
     const campos=["nombre"]
     return <Dialog open={true} onClose={onCerrar}>
-        {campos.map((x)=>inputTarea(x))}
-        <button onClick={()=>{
-            miTarea.id?editarTarea(miTarea):agregarTarea(miTarea); onCerrar()
-        }}>{miTarea.id?"Modificar":"Añadir"}</button>
-        <button onClick={onCerrar}>Cerrar</button>
+        <form onSubmit={onSubmitForm}>
+            {campos.map((x)=>inputTarea(x))}
+            <input type="submit" value={miTarea.id?"Modificar":"Añadir"}></input>
+            <input type="button" value="Cerrar" onClick={onCerrar}></input>
+        </form>
     </Dialog>
 }
