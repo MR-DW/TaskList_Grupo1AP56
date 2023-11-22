@@ -1,4 +1,4 @@
-import Dialog from '@mui/material/Dialog';
+import Dialog from "@mui/material/Dialog";
 import { useState } from "react";
 
 export default function TaskForm(props){
@@ -25,4 +25,5 @@ export default function TaskForm(props){
             <input type="button" value="Cerrar" onClick={onCerrar}></input>
         </form>
     </Dialog>
+  );
 }
