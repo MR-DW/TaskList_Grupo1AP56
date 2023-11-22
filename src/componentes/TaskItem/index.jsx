@@ -7,38 +7,38 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import TaskForm from "../TaskForm";
+import PropTypes from 'prop-types';
 
-export default function TaskItem() {
-  const [tasks, setTasks] = useState([
-    { id: "TSK_1", nombre: "Tarea del dia - TaskForm", completado: false },
-    { id: "TSK_2", nombre: "Tomar un cafe", completado: true },
-  ]);
+export default function TaskItem(props) {
+  const { tasks, setTasks } = props;
+
+  TaskItem.propTypes = {
+    tasks: PropTypes.array.isRequired,
+    setTasks: PropTypes.func.isRequired,
+  };
 
   const [mostrarForm, setMostrarForm] = useState(false);
 
-const onChangeCompletado = (tareaId) => {
-  setTasks((prevTasks) =>
-    prevTasks.map((tarea) =>
-      tarea.id === tareaId ? { ...tarea, completado: !tarea.completado } : tarea
-    )
-  );
-};
+  const onChangeCompletado = (tareaId) => {
+    setTasks(
+      tasks.map((tarea) =>
+        tarea.id === tareaId
+          ? { ...tarea, completado: !tarea.completado }
+          : tarea
+      )
+    );
+  };
 
   const eliminarTarea = (tareaEliminada) => {
-    //filtrar la tarea a eliminar segun id
     setTasks(
       tasks.filter((tarea) => {
-        return tareaEliminada.id != tarea.id;
+        return tarea.id != tareaEliminada.id;
       })
     );
   };
-  const editarTarea = (tareaEditada) => {
-    //reemplazar la tarea en tasks segun id
-    setTasks(
-      tasks.map((tarea) => {
-        return tareaEditada.id != tarea.id ? tarea : tareaEditada;
-      })
-    );
+
+  const editarTarea = (x) => {
+    setMostrarForm(true);
   };
 
   return (
@@ -60,7 +60,7 @@ const onChangeCompletado = (tareaId) => {
                       size="small"
                       variant="contained"
                       color={x.completado ? "success" : "primary"}
-                      onClick={()=>onChangeCompletado(x.id)}
+                      onClick={() => onChangeCompletado(x.id)}
                     >
                       {x.completado ? "Realizada" : "No Realizada"}
                     </Button>
@@ -86,22 +86,18 @@ const onChangeCompletado = (tareaId) => {
                       <Grid item lg={2}>
                         <Button size="small" variant="contained" color="error">
                           <DeleteForeverIcon
-                          onClick={()=> eliminarTarea(x.id)}
+                            onClick={() => eliminarTarea(x)}
                           ></DeleteForeverIcon>
                         </Button>
                       </Grid>
-                      {x.completado && (
+                      {!x.completado && (
                         <Grid item lg={2}>
                           <Button
                             size="small"
                             variant="contained"
                             color="warning"
                           >
-                            <EditIcon
-                              onClick={() => {
-                                setMostrarForm(true);
-                              }}
-                            ></EditIcon>
+                            <EditIcon onClick={() => editarTarea(x)}></EditIcon>
                           </Button>
                         </Grid>
                       )}
