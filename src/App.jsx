@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import TaskForm from './componentes/TaskForm'
+import TaskItem from './componentes/TaskItem'
 //Esta app es solo para testeo del componente TaskForm hasta que estén implementadas sus dependencias e interfaces
 function App() {
   const [tasks,setTasks]=useState([
@@ -46,6 +47,9 @@ function App() {
         }}>Agregar Tarea</button>
       
       {/* Renderizar una lista de TaskItem*/}
+
+      <TaskItem/>
+      
       <ul>
         {tasks.map((x)=>{
           return <li key={x.id}>
