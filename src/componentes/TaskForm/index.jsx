@@ -1,13 +1,21 @@
 import Dialog from "@mui/material/Dialog";
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
 export default function TaskForm(props) {
   //const { onCerrar, tarea, agregarTarea, editarTarea } = props;
   //Como no estan respetando el orden de los props, los seteo explícitamente
-  const onCerrar = props.onCerrar ?? ((x)=>{console.warn("onCerrar@TaskForm no implementado")});
+  const onCerrar = props.onCerrar;
   const tarea = props.tarea
   const agregarTarea = props.agregarTarea ?? ((x)=>{console.warn("agregarTarea@TaskForm no implementado")});
   const editarTarea = props.editarTarea ?? ((x)=>{console.warn("editarTarea@TaskForm no implementado")});
+
+  TaskForm.propTypes = {
+    onCerrar: PropTypes.func.isRequired,
+    tarea: PropTypes.object.isRequired,
+    agregarTarea: PropTypes.func,
+    editarTarea: PropTypes.func
+  };
 
   const [miTarea, setMiTarea] = useState(
     tarea ?? { id: null, nombre: "Nueva tarea!", completado: false }
