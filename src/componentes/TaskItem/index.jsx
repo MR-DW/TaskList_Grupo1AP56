@@ -37,9 +37,13 @@ export default function TaskItem(props) {
     );
   };
 
-  const editarTarea = (x) => {
-    setMostrarForm(true);
-  };
+//   const editarTarea = (x) => {
+//     setMostrarForm(true);
+//     tasks.filter((tarea)=>{
+//         // console.log("x: ", x)
+//         tarea.id == x.id ? tarea : x
+//     })
+//   };
 
   return (
     <>
@@ -84,9 +88,9 @@ export default function TaskItem(props) {
                       alignItems="center"
                     >
                       <Grid item lg={2}>
-                        <Button size="small" variant="contained" color="error">
+                        <Button size="small" variant="contained" color="error" onClick={() => eliminarTarea(x)}>
                           <DeleteForeverIcon
-                            onClick={() => eliminarTarea(x)}
+                            
                           ></DeleteForeverIcon>
                         </Button>
                       </Grid>
@@ -96,8 +100,9 @@ export default function TaskItem(props) {
                             size="small"
                             variant="contained"
                             color="warning"
+                            onClick={() =>setMostrarForm(true)}
                           >
-                            <EditIcon onClick={() => editarTarea(x)}></EditIcon>
+                            <EditIcon ></EditIcon>
                           </Button>
                         </Grid>
                       )}
@@ -109,7 +114,6 @@ export default function TaskItem(props) {
                 <TaskForm
                   onCerrar={() => setMostrarForm(false)}
                   tarea={x}
-                  editarTarea={editarTarea}
                 />
               )}
             </div>
