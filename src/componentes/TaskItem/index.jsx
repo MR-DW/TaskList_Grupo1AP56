@@ -18,7 +18,12 @@ export default function TaskItem(props) {
   };
 
   const [mostrarForm, setMostrarForm] = useState(false);
+  const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
 
+  const abrirFormulario = (tarea) => {
+    setTareaSeleccionada(tarea)
+    setMostrarForm(true);
+  }
   const onChangeCompletado = (tareaId) => {
     setTasks(
       tasks.map((tarea) =>
@@ -37,13 +42,13 @@ export default function TaskItem(props) {
     );
   };
 
-//   const editarTarea = (x) => {
-//     setMostrarForm(true);
-//     tasks.filter((tarea)=>{
-//         // console.log("x: ", x)
-//         tarea.id == x.id ? tarea : x
-//     })
-//   };
+  const editarTarea = (tareaEditada) => {
+    setMostrarForm(false);
+    //reemplazar la tarea en tasks segun id
+    setTasks(tasks.map((tarea) => {
+      return (tareaEditada.id != tarea.id) ? tarea : tareaEditada
+    }))
+  }
 
   return (
     <>
@@ -90,7 +95,7 @@ export default function TaskItem(props) {
                       <Grid item lg={2}>
                         <Button size="small" variant="contained" color="error" onClick={() => eliminarTarea(x)}>
                           <DeleteForeverIcon
-                            
+
                           ></DeleteForeverIcon>
                         </Button>
                       </Grid>
@@ -100,7 +105,7 @@ export default function TaskItem(props) {
                             size="small"
                             variant="contained"
                             color="warning"
-                            onClick={() =>setMostrarForm(true)}
+                            onClick={() => abrirFormulario(x)}
                           >
                             <EditIcon ></EditIcon>
                           </Button>
@@ -110,12 +115,6 @@ export default function TaskItem(props) {
                   </Grid>
                 </Grid>
               </Box>
-              {mostrarForm && (
-                <TaskForm
-                  onCerrar={() => setMostrarForm(false)}
-                  tarea={x}
-                />
-              )}
             </div>
           ))}
         </div>
@@ -123,6 +122,16 @@ export default function TaskItem(props) {
         <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
           No tienes tareas pendientes!
         </Typography>
+      )}
+
+      {/* Se mueve fuera del map, de lo contrario aunque sea un modal, intenta renderizarse por cada uno de los items. 
+      Idealmente solo sería necesario setear las variables en App, para reutilizar el mismo form y asegurar que sea único*/}
+      {mostrarForm && (
+        <TaskForm
+          onCerrar={() => setMostrarForm(false)}
+          editarTarea={editarTarea}
+          tarea={tareaSeleccionada}
+        />
       )}
     </>
   );

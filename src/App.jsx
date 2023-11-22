@@ -12,7 +12,7 @@ function App() {
   ]);
   const [idCounter, setIdCounter] = useState(tasks.length + 1);
   const [mostrarForm, setMostrarForm] = useState(false);
-  const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
+  //const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
 
   const nuevoId = () => {
     //La forma mas simple de generar un id unico, es siempre incrementarlo, asi nunca se repite
@@ -31,7 +31,7 @@ function App() {
 
       <button
         onClick={() => {
-          setTareaSeleccionada(null);
+          //setTareaSeleccionada(null);
           setMostrarForm(!mostrarForm);
         }}
       >
@@ -49,8 +49,9 @@ function App() {
         {mostrarForm && (
           <TaskForm
             onCerrar={() => setMostrarForm(false)}
-            tarea={tareaSeleccionada}
+            tarea={null} //en agregar siempre será null
             agregarTarea={agregarTarea}
+            //editarTarea={(x)=>{console.warn("Componente equivocado")}}
           />
         )}
       </div>
