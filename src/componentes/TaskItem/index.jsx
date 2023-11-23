@@ -1,15 +1,15 @@
-import "../TaskItem/TaskItem.css";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import { useState } from "react";
-import TaskForm from "../TaskForm";
-import PropTypes from "prop-types";
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import TaskForm from "../TaskForm";
+import "../TaskItem/TaskItem.css";
 
 export default function TaskItem(props) {
   const { tasks, setTasks } = props;
@@ -60,7 +60,7 @@ export default function TaskItem(props) {
         <>
           {tasks.map((x) => (
             <Card sx={{ minWidth: 275 }} key={x.id} variant="outlined">
-              <CardContent >
+              <CardContent>
                 <Box lg={{ flexGrow: 1 }}>
                   <Grid
                     container
