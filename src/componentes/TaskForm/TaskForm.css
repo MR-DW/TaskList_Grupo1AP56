@@ -1,6 +1,6 @@
 .dialogTitle{
  background-color: rgb(137, 137, 137);
  color: rgb(255, 255, 255);
- padding: 0.5rem 1rem;
- margin-bottom: 1rem;
+ padding: 0.5rem 1rem!important;
+ margin-bottom: 1rem!important;
 }
