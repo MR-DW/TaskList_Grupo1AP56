@@ -1,29 +1,26 @@
 import { Stack, Dialog, TextField, FormControl, Button, DialogTitle, DialogActions, DialogContent } from "@mui/material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from 'prop-types';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from "@mui/icons-material/Edit";
 import './TaskForm.css'
+import { TaskContext } from "../TaskList"
 
 export default function TaskForm(props) {
-  //const { onCerrar, tarea, agregarTarea, editarTarea } = props;
-  //Como no estan respetando el orden de los props, los seteo explícitamente
-  const onCerrar = props.onCerrar;
-  const tarea = props.tarea
-  const agregarTarea = props.agregarTarea ?? ((x) => { console.warn("agregarTarea@TaskForm no implementado") });
-  const editarTarea = props.editarTarea ?? ((x) => { console.warn("editarTarea@TaskForm no implementado") });
-
+  // eslint-disable-next-line no-unused-vars
+  const { abrirFormulario, agregarTarea, editarTarea, eliminarTarea } = useContext(TaskContext)
+  const {tarea} = props
+  
   TaskForm.propTypes = {
-    onCerrar: PropTypes.func.isRequired,
     tarea: PropTypes.object,
-    agregarTarea: PropTypes.func,
-    editarTarea: PropTypes.func,
   };
 
   const [miTarea, setMiTarea] = useState(
     tarea ?? { id: null, nombre: "Nueva tarea!", completado: false }
   );
-
+  const onCerrar=()=>{
+    abrirFormulario(null,false)
+  }
   //bien podría ser un componente en sí.
   const inputTarea = (propiedad) => {
     return (
@@ -39,7 +36,7 @@ export default function TaskForm(props) {
       />
     );
   };
-  const onSubmitForm = (e) => {
+  const onSubmitForm = () => {
     miTarea.id ? editarTarea(miTarea) : agregarTarea(miTarea);
     onCerrar();
   };

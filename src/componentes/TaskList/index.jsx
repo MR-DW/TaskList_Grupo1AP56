@@ -1,11 +1,13 @@
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
+import { createContext, useState } from "react";
 import TaskForm from "../TaskForm";
 import TaskItem from "../TaskItem";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import "./TaskList.css";
 import Typography from "@mui/material/Typography";
+
+export const TaskContext = createContext({});
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([
@@ -14,7 +16,7 @@ export default function TaskList() {
   ]);
   const [idCounter, setIdCounter] = useState(tasks.length + 1);
   const [mostrarForm, setMostrarForm] = useState(false);
-  //const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
+  const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
 
   const nuevoId = () => {
     //La forma mas simple de generar un id unico, es siempre incrementarlo, asi nunca se repite
@@ -26,9 +28,35 @@ export default function TaskList() {
     nuevaTarea.id = `TSK_${nuevoId()}`;
     setTasks([nuevaTarea, ...tasks]);
   };
+  const eliminarTarea = (tareaEliminada) => {
+    setTasks(
+      tasks.filter((tarea) => {
+        return tarea.id != tareaEliminada.id;
+      })
+    );
+  };
+
+  const editarTarea = (tareaEditada) => {
+    setMostrarForm(false);
+    setTasks(
+      tasks.map((tarea) => {
+        return tareaEditada.id != tarea.id ? tarea : tareaEditada;
+      })
+    );
+  };
+  const abrirFormulario = (tarea = null, mostrar = true) => {
+    setTareaSeleccionada(tarea);
+    setMostrarForm(mostrar);
+  }
+  const ContextValue = {
+    abrirFormulario: abrirFormulario,
+    agregarTarea: agregarTarea,
+    editarTarea: editarTarea,
+    eliminarTarea: eliminarTarea
+  }
 
   return (
-    <>
+    <TaskContext.Provider value={ContextValue}>
       <Box sx={{ flexGrow: 12 }} className="boxContainer">
         <Grid
           container
@@ -66,7 +94,15 @@ export default function TaskList() {
           </Grid>
 
           <Grid item xs={8}>
-            <TaskItem tasks={tasks} setTasks={setTasks} />
+            {
+              (tasks.length > 0) ? (
+                tasks.map((x) => { return <TaskItem task={x} key={`TaskItem_${x.id}`} /> })
+              ) : (
+                <Typography sx={{ fontSize: 24 }} color="text.secondary" bgcolor={"whitesmoke"} gutterBottom>
+                  No tienes tareas pendientes!
+                </Typography>
+              )
+            }
           </Grid>
         </Grid>
       </Box>
@@ -75,13 +111,10 @@ export default function TaskList() {
         {/* Renderizar el TaskForm. Mantener el condicional por fuera del componente (tarea se copia durante el primer renderizado, hasta que se cierra) */}
         {mostrarForm && (
           <TaskForm
-            onCerrar={() => setMostrarForm(false)}
-            tarea={null} //en agregar siempre será null
-            agregarTarea={agregarTarea}
-            //editarTarea={(x)=>{console.warn("Componente equivocado")}}
+            tarea={tareaSeleccionada}
           />
         )}
       </div>
-    </>
+    </TaskContext.Provider>
   );
 }
