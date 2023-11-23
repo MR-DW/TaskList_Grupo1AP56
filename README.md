@@ -1,4 +1,5 @@
 Nombre del Proyecto: "# TaskList_Grupo1AP56" 
+
 Integrantes: Caballero David, Ruiz Matias Ignacio.
 
 1- Planing del Proyecto:
@@ -42,5 +43,6 @@ Rama Develop. (Rama que contendrá el merge de todos los componentes, al aprobar
 Rama Personal (Rama donde cada programador desarrolla su componente).
 
 C- Diagrama de flujo para el uso de herramientas según los componentes a construir:
-![image](https://github.com/MR-DW/TaskList_Grupo1AP56/assets/105668337/88a18b66-d84a-423a-a0ca-52f4aa2ca33d)
+![image](https://github.com/MR-DW/TaskList_Grupo1AP56/assets/105668337/4c56e95e-36de-4032-baae-a2deb9998be3)
+
 
