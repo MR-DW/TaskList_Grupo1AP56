@@ -7,7 +7,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import TaskForm from "../TaskForm";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 export default function TaskItem(props) {
   const { tasks, setTasks } = props;
@@ -21,9 +23,9 @@ export default function TaskItem(props) {
   const [tareaSeleccionada, setTareaSeleccionada] = useState(null);
 
   const abrirFormulario = (tarea) => {
-    setTareaSeleccionada(tarea)
+    setTareaSeleccionada(tarea);
     setMostrarForm(true);
-  }
+  };
   const onChangeCompletado = (tareaId) => {
     setTasks(
       tasks.map((tarea) =>
@@ -45,79 +47,86 @@ export default function TaskItem(props) {
   const editarTarea = (tareaEditada) => {
     setMostrarForm(false);
     //reemplazar la tarea en tasks segun id
-    setTasks(tasks.map((tarea) => {
-      return (tareaEditada.id != tarea.id) ? tarea : tareaEditada
-    }))
-  }
+    setTasks(
+      tasks.map((tarea) => {
+        return tareaEditada.id != tarea.id ? tarea : tareaEditada;
+      })
+    );
+  };
 
   return (
     <>
       {tasks.length > 0 ? (
-        <div className="container">
+        <>
           {tasks.map((x) => (
-            <div key={x.id} className="container-box">
-              <Box lg={{ flexGrow: 1 }} className="box-container">
-                <Grid
-                  container
-                  spacing={1}
-                  direction="row"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Grid item lg={2}>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color={x.completado ? "success" : "primary"}
-                      onClick={() => onChangeCompletado(x.id)}
-                    >
-                      {x.completado ? "Realizada" : "No Realizada"}
-                    </Button>
-                  </Grid>
+            <Card sx={{ minWidth: 275 }} key={x.id} variant="outlined">
+              <CardContent >
+                <Box lg={{ flexGrow: 1 }}>
+                  <Grid
+                    container
+                    spacing={1}
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Grid item lg={2}>
+                      <Button
+                        size="small"
+                        variant="contained"
+                        color={x.completado ? "success" : "primary"}
+                        onClick={() => onChangeCompletado(x.id)}
+                      >
+                        {x.completado ? "Realizada" : "No Realizada"}
+                      </Button>
+                    </Grid>
 
-                  <Grid item lg={6}>
-                    <Typography
-                      sx={{ fontSize: 24 }}
-                      color="text.secondary"
-                      gutterBottom
-                    >
-                      {x.nombre}
-                    </Typography>
-                  </Grid>
+                    <Grid item lg={6}>
+                      <Typography
+                        sx={{ fontSize: 24 }}
+                        color="text.secondary"
+                        gutterBottom
+                      >
+                        {x.nombre}
+                      </Typography>
+                    </Grid>
 
-                  <Grid item lg={2}>
-                    <Grid
-                      container
-                      spacing={1}
-                      direction="column"
-                      alignItems="center"
-                    >
-                      <Grid item lg={2}>
-                        <Button size="small" variant="contained" color="error" onClick={() => eliminarTarea(x)}>
-                          <DeleteForeverIcon
-
-                          ></DeleteForeverIcon>
-                        </Button>
-                      </Grid>
-                      {!x.completado && (
+                    <Grid item lg={2}>
+                      <Grid
+                        container
+                        spacing={1}
+                        direction="column"
+                        alignItems="center"
+                      >
                         <Grid item lg={2}>
                           <Button
                             size="small"
                             variant="contained"
-                            color="warning"
-                            onClick={() => abrirFormulario(x)}
+                            color="error"
+                            onClick={() => eliminarTarea(x)}
                           >
-                            <EditIcon ></EditIcon>
+                            <DeleteForeverIcon></DeleteForeverIcon>
                           </Button>
                         </Grid>
-                      )}
+                        {!x.completado && (
+                          <Grid item lg={2}>
+                            <Button
+                              size="small"
+                              variant="contained"
+                              color="warning"
+                              onClick={() => abrirFormulario(x)}
+                            >
+                              <EditIcon></EditIcon>
+                            </Button>
+                          </Grid>
+                        )}
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </div>
+                </Box>
+              </CardContent>
+            </Card>
           ))}
-        </div>
+        </>
       ) : (
         <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
           No tienes tareas pendientes!
