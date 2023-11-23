@@ -3,6 +3,7 @@ import { useState } from "react";
 import PropTypes from 'prop-types';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from "@mui/icons-material/Edit";
+import './TaskForm.css'
 
 export default function TaskForm(props) {
   //const { onCerrar, tarea, agregarTarea, editarTarea } = props;
@@ -30,7 +31,7 @@ export default function TaskForm(props) {
         id="standard-basic"
         variant="standard"
         key={"PROP_" + propiedad}
-        label={propiedad}
+        label='Título de tu tarea'
         onChange={(e) => {
           setMiTarea({ ...miTarea, [propiedad]: e.target.value });
         }}
@@ -44,10 +45,10 @@ export default function TaskForm(props) {
   };
   const campos = ["nombre"];
   return (
-    <Dialog open={true} onClose={onCerrar}>
-      <form onSubmit={onSubmitForm}>
-        <DialogTitle>
-          <Stack direction="row" spacing={2}>
+    <Dialog open={true} onClose={onCerrar} >
+      <form onSubmit={onSubmitForm} >
+        <DialogTitle className="dialogTitle">
+          <Stack direction="row" spacing={2} className="stack">
             <div>{miTarea.id ? <EditIcon /> : <AddIcon />}</div>
             <div>{miTarea.id ? "Modificando" : "Añadiendo"}</div>
           </Stack>
