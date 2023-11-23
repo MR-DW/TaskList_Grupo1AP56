@@ -12,8 +12,7 @@ import "./TaskItem.css";
 import { TaskContext } from ".."
 export default function TaskItem(props) {
   const { task } = props;
-  // eslint-disable-next-line no-unused-vars
-  const { abrirFormulario, agregarTarea, editarTarea, eliminarTarea } = useContext(TaskContext)
+  const { abrirFormulario, editarTarea, eliminarTarea } = useContext(TaskContext)
 
   TaskItem.propTypes = {
     task: PropTypes.object.isRequired

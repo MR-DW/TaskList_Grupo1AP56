@@ -7,8 +7,7 @@ import './TaskForm.css'
 import { TaskContext } from ".."
 
 export default function TaskForm(props) {
-  // eslint-disable-next-line no-unused-vars
-  const { abrirFormulario, agregarTarea, editarTarea, eliminarTarea } = useContext(TaskContext)
+  const { abrirFormulario, agregarTarea, editarTarea } = useContext(TaskContext)
   const {tarea} = props
   
   TaskForm.propTypes = {
