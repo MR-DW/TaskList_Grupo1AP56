@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { createContext, useState, useEffect, useRef } from "react";
-import TaskForm from "../TaskForm";
-import TaskItem from "../TaskItem";
+import TaskForm from "./TaskForm";
+import TaskItem from "./TaskItem";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import "./TaskList.css";
@@ -25,7 +25,6 @@ export default function TaskList() {
   };
   //Me gustaría cargar y guardar items individualmente, pero lo mas sencillo es usar el estado completo.
   const cargarLista =()=>{
-    console.log("Cargando Lista")
     const localTasks=localStorage.getItem(nombre);
     if (localTasks!=null){
       const nuevaLista=JSON.parse(localTasks)
@@ -38,13 +37,10 @@ export default function TaskList() {
         return {...x, id:`TSK_${i++}`}
       }))
       setIdCounter(i)
-      console.log("Lista cargada")
     }
   }
   const guardarLista =()=>{
-    console.log(`pedido para guardar Lista: ${tasksEditado.current}`)
     if (!tasksEditado.current) return; //Evita guardar la lista con el setState inicial.
-    console.log("Guardando Lista")
     localStorage.setItem(nombre, 
       JSON.stringify(tasks)
     );
@@ -119,8 +115,7 @@ export default function TaskList() {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    //setTareaSeleccionada(null);
-                    setMostrarForm(!mostrarForm);
+                    abrirFormulario(null)
                   }}
                 >
                   Agregar Tarea
