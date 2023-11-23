@@ -1,5 +1,9 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { createContext, useState, useEffect, useRef } from "react";
+import TaskForm from "./TaskForm";
+import TaskItem from "./TaskItem";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createContext, useEffect, useRef, useState } from "react";
@@ -25,7 +29,6 @@ export default function TaskList() {
   };
 
   const cargarLista =()=>{
-    console.log("Cargando Lista")
     const localTasks=localStorage.getItem(nombre);
     if (localTasks!=null){
       const nuevaLista=JSON.parse(localTasks)
@@ -118,7 +121,7 @@ export default function TaskList() {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    setMostrarForm(!mostrarForm);
+                    abrirFormulario(null)
                   }}
                 >
                   Agregar Tarea

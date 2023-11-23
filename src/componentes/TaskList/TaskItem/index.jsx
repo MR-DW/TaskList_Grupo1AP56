@@ -72,6 +72,7 @@ export default function TaskItem(props) {
                     onClick={() => eliminarTarea(task)}
                   >
                     <DeleteForeverIcon/>
+                    <DeleteForeverIcon/>
                   </Button>
                 </Grid>
                 {!task.completado && (
@@ -82,6 +83,7 @@ export default function TaskItem(props) {
                       color="warning"
                       onClick={() => abrirFormulario(task)}
                     >
+                      <EditIcon/>
                       <EditIcon/>
                     </Button>
                   </Grid>

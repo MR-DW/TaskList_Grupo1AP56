@@ -1,7 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import {
-  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -17,11 +16,9 @@ import { TaskContext } from "../../TaskList";
 import "./TaskForm.css";
 
 export default function TaskForm(props) {
-  // eslint-disable-next-line no-unused-vars
-  const { abrirFormulario, agregarTarea, editarTarea } =
-    useContext(TaskContext);
-  const { tarea } = props;
-
+  const { abrirFormulario, agregarTarea, editarTarea } = useContext(TaskContext)
+  const {tarea} = props
+  
   TaskForm.propTypes = {
     tarea: PropTypes.object,
   };
@@ -47,9 +44,10 @@ export default function TaskForm(props) {
       />
     );
   };
-  const onSubmitForm = () => {
+  const onSubmitForm = (e) => {
     miTarea.id ? editarTarea(miTarea) : agregarTarea(miTarea);
     onCerrar();
+    e.preventDefault();
   };
   const campos = ["nombre"];
   return (
@@ -66,9 +64,9 @@ export default function TaskForm(props) {
         </DialogContent>
         <DialogActions>
           <Button
+            disabled={miTarea.nombre===""} //No permitir añadir una tarea sin nombre
             variant="outlined"
             type="submit"
-            disabled={campos.some((x) => miTarea[x].trim() === "")}
           >
             {miTarea.id ? "Modificar" : "Añadir"}
           </Button>
