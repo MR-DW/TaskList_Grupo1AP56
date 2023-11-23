@@ -4,7 +4,7 @@ import TaskForm from "../TaskForm";
 import TaskItem from "../TaskItem";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import './TaskList.css'
+import "./TaskList.css";
 import Typography from "@mui/material/Typography";
 
 export default function TaskList() {
@@ -37,29 +37,31 @@ export default function TaskList() {
           justifyContent="center"
           alignItems="stretch"
         >
-          <Grid
-            container
-            spacing={2}
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Grid item xs={8}>
-              <Typography variant="h3" component="h1">
-                Mis Tareas!
-              </Typography>
-            </Grid>
+          <Grid item xs={10}>
+            <Grid
+              container
+              spacing={2}
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Grid item xs={8}>
+                <Typography variant="h3" component="h1">
+                  Mis Tareas!
+                </Typography>
+              </Grid>
 
-            <Grid item xs={4}>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  //setTareaSeleccionada(null);
-                  setMostrarForm(!mostrarForm);
-                }}
-              >
-                Agregar Tarea
-              </Button>
+              <Grid item xs={2}>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    //setTareaSeleccionada(null);
+                    setMostrarForm(!mostrarForm);
+                  }}
+                >
+                  Agregar Tarea
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
 
