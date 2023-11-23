@@ -8,19 +8,21 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import { useContext } from "react";
-import "../TaskItem/TaskItem.css";
-import { TaskContext } from "../TaskList"
+import { TaskContext } from "../../TaskList";
+import "./TaskItem.css";
+
 export default function TaskItem(props) {
+ 
   const { task } = props;
-  // eslint-disable-next-line no-unused-vars
-  const { abrirFormulario, agregarTarea, editarTarea, eliminarTarea } = useContext(TaskContext)
+
+  const { abrirFormulario, editarTarea, eliminarTarea } =  useContext(TaskContext);
 
   TaskItem.propTypes = {
-    task: PropTypes.object.isRequired
+    task: PropTypes.object.isRequired,
   };
 
   const onChangeCompletado = (tareaCambiada) => {
-    editarTarea({ ...tareaCambiada, completado: !tareaCambiada.completado })
+    editarTarea({ ...tareaCambiada, completado: !tareaCambiada.completado });
   };
 
   return (
@@ -69,7 +71,7 @@ export default function TaskItem(props) {
                     color="error"
                     onClick={() => eliminarTarea(task)}
                   >
-                    <DeleteForeverIcon></DeleteForeverIcon>
+                    <DeleteForeverIcon/>
                   </Button>
                 </Grid>
                 {!task.completado && (
@@ -80,7 +82,7 @@ export default function TaskItem(props) {
                       color="warning"
                       onClick={() => abrirFormulario(task)}
                     >
-                      <EditIcon></EditIcon>
+                      <EditIcon/>
                     </Button>
                   </Grid>
                 )}

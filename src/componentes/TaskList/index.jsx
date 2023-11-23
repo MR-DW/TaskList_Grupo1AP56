@@ -1,11 +1,11 @@
-import Button from "@mui/material/Button";
-import { createContext, useState, useEffect, useRef } from "react";
-import TaskForm from "../TaskForm";
-import TaskItem from "../TaskItem";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import "./TaskList.css";
 import Typography from "@mui/material/Typography";
+import { createContext, useEffect, useRef, useState } from "react";
+import TaskForm from "./TaskForm";
+import TaskItem from "./TaskItem";
+import "./TaskList.css";
 
 export const TaskContext = createContext({});
 export default function TaskList() {
@@ -19,32 +19,27 @@ export default function TaskList() {
   const nombre = "Mi lista de tareas"; //para distinguir varios TaskLists en una app
 
   const nuevoId = () => {
-    //La forma mas simple de generar un id unico, es siempre incrementarlo, asi nunca se repite
+    //Genera un id unico que se incrementa para que no se repita
     setIdCounter(idCounter + 1);
     return idCounter;
   };
-  //Me gustaría cargar y guardar items individualmente, pero lo mas sencillo es usar el estado completo.
+
   const cargarLista =()=>{
     console.log("Cargando Lista")
     const localTasks=localStorage.getItem(nombre);
     if (localTasks!=null){
       const nuevaLista=JSON.parse(localTasks)
-      //Debo respetar el generador de Ids, pero nuevoId() no puede ser utilizado continuamente.
-      //setState al ser asincrónico, no se comporta bien al utilizarlo secuencialmente,
-      //por lo que no puedo vaciar tasks y luego iterar agregarTarea tampoco.
-      //todo debe ser en un solo llamado.
+
       let i=idCounter
       setTasks(nuevaLista.map((x)=>{
         return {...x, id:`TSK_${i++}`}
       }))
+
       setIdCounter(i)
-      console.log("Lista cargada")
     }
   }
   const guardarLista =()=>{
-    console.log(`pedido para guardar Lista: ${tasksEditado.current}`)
     if (!tasksEditado.current) return; //Evita guardar la lista con el setState inicial.
-    console.log("Guardando Lista")
     localStorage.setItem(nombre, 
       JSON.stringify(tasks)
     );
@@ -56,6 +51,7 @@ export default function TaskList() {
     nuevaTarea.id = `TSK_${nuevoId()}`;
     setTasks([nuevaTarea, ...tasks]);
   };
+
   const eliminarTarea = (tareaEliminada) => {
     tasksEditado.current=true;
     setTasks(
@@ -74,10 +70,12 @@ export default function TaskList() {
       })
     );
   };
+
   const abrirFormulario = (tarea = null, mostrar = true) => {
     setTareaSeleccionada(tarea);
     setMostrarForm(mostrar);
   }
+
   const ContextValue = {
     abrirFormulario: abrirFormulario,
     agregarTarea: agregarTarea,
@@ -91,6 +89,7 @@ export default function TaskList() {
   //guardar el estado cuando tasks es modificado
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(guardarLista,[tasks]);
+
   return (
     <TaskContext.Provider value={ContextValue}>
       <Box sx={{ flexGrow: 12 }} className="boxContainer">
@@ -119,7 +118,6 @@ export default function TaskList() {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    //setTareaSeleccionada(null);
                     setMostrarForm(!mostrarForm);
                   }}
                 >
@@ -144,7 +142,6 @@ export default function TaskList() {
       </Box>
 
       <div>
-        {/* Renderizar el TaskForm. Mantener el condicional por fuera del componente (tarea se copia durante el primer renderizado, hasta que se cierra) */}
         {mostrarForm && (
           <TaskForm
             tarea={tareaSeleccionada}
