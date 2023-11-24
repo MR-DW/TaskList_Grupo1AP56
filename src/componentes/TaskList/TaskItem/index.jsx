@@ -8,12 +8,11 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import { useContext } from "react";
-import { TaskContext } from "../../TaskList";
+import { TaskContext } from "..";
 import "./TaskItem.css";
 
 export default function TaskItem(props) {
   const { task } = props;
-
   const { abrirFormulario, editarTarea, eliminarTarea } =
     useContext(TaskContext);
 
@@ -72,7 +71,6 @@ export default function TaskItem(props) {
                     onClick={() => eliminarTarea(task)}
                   >
                     <DeleteForeverIcon />
-                    <DeleteForeverIcon />
                   </Button>
                 </Grid>
                 {!task.completado && (
@@ -83,7 +81,6 @@ export default function TaskItem(props) {
                       color="warning"
                       onClick={() => abrirFormulario(task)}
                     >
-                      <EditIcon />
                       <EditIcon />
                     </Button>
                   </Grid>

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
-import { TaskContext } from "../../TaskList";
+import { TaskContext } from "..";
 import "./TaskForm.css";
 
 export default function TaskForm(props) {
@@ -45,12 +45,15 @@ export default function TaskForm(props) {
       />
     );
   };
+
   const onSubmitForm = (e) => {
     miTarea.id ? editarTarea(miTarea) : agregarTarea(miTarea);
     onCerrar();
     e.preventDefault();
   };
+
   const campos = ["nombre"];
+  
   return (
     <Dialog open={true} onClose={onCerrar}>
       <form onSubmit={onSubmitForm}>

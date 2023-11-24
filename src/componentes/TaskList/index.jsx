@@ -35,7 +35,6 @@ export default function TaskList() {
           return { ...x, id: `TSK_${i++}` };
         })
       );
-
       setIdCounter(i);
     }
   };
@@ -74,7 +73,6 @@ export default function TaskList() {
     setTareaSeleccionada(tarea);
     setMostrarForm(mostrar);
   };
-
   const ContextValue = {
     abrirFormulario: abrirFormulario,
     agregarTarea: agregarTarea,
@@ -145,7 +143,9 @@ export default function TaskList() {
         </Grid>
       </Box>
 
-      <div>{mostrarForm && <TaskForm tarea={tareaSeleccionada} />}</div>
+      <div>
+        {mostrarForm && <TaskForm tarea={tareaSeleccionada} />}
+      </div>
     </TaskContext.Provider>
   );
 }
