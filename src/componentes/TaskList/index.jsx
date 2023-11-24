@@ -1,9 +1,5 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { createContext, useState, useEffect, useRef } from "react";
-import TaskForm from "./TaskForm";
-import TaskItem from "./TaskItem";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createContext, useEffect, useRef, useState } from "react";
@@ -13,7 +9,7 @@ import "./TaskList.css";
 
 export const TaskContext = createContext({});
 export default function TaskList() {
-  const tasksEditado=useRef(false)
+  const tasksEditado = useRef(false);
 
   const [tasks, setTasks] = useState([]);
   const [idCounter, setIdCounter] = useState(tasks.length + 1);
@@ -28,35 +24,35 @@ export default function TaskList() {
     return idCounter;
   };
 
-  const cargarLista =()=>{
-    const localTasks=localStorage.getItem(nombre);
-    if (localTasks!=null){
-      const nuevaLista=JSON.parse(localTasks)
+  const cargarLista = () => {
+    const localTasks = localStorage.getItem(nombre);
+    if (localTasks != null) {
+      const nuevaLista = JSON.parse(localTasks);
 
-      let i=idCounter
-      setTasks(nuevaLista.map((x)=>{
-        return {...x, id:`TSK_${i++}`}
-      }))
+      let i = idCounter;
+      setTasks(
+        nuevaLista.map((x) => {
+          return { ...x, id: `TSK_${i++}` };
+        })
+      );
 
-      setIdCounter(i)
+      setIdCounter(i);
     }
-  }
-  const guardarLista =()=>{
+  };
+  const guardarLista = () => {
     if (!tasksEditado.current) return; //Evita guardar la lista con el setState inicial.
-    localStorage.setItem(nombre, 
-      JSON.stringify(tasks)
-    );
-    editarTarea.current=false;
-  }    
+    localStorage.setItem(nombre, JSON.stringify(tasks));
+    editarTarea.current = false;
+  };
 
   const agregarTarea = (nuevaTarea) => {
-    tasksEditado.current=true;
+    tasksEditado.current = true;
     nuevaTarea.id = `TSK_${nuevoId()}`;
     setTasks([nuevaTarea, ...tasks]);
   };
 
   const eliminarTarea = (tareaEliminada) => {
-    tasksEditado.current=true;
+    tasksEditado.current = true;
     setTasks(
       tasks.filter((tarea) => {
         return tarea.id != tareaEliminada.id;
@@ -65,7 +61,7 @@ export default function TaskList() {
   };
 
   const editarTarea = (tareaEditada) => {
-    tasksEditado.current=true;
+    tasksEditado.current = true;
     setMostrarForm(false);
     setTasks(
       tasks.map((tarea) => {
@@ -77,21 +73,21 @@ export default function TaskList() {
   const abrirFormulario = (tarea = null, mostrar = true) => {
     setTareaSeleccionada(tarea);
     setMostrarForm(mostrar);
-  }
+  };
 
   const ContextValue = {
     abrirFormulario: abrirFormulario,
     agregarTarea: agregarTarea,
     editarTarea: editarTarea,
-    eliminarTarea: eliminarTarea
-  }
+    eliminarTarea: eliminarTarea,
+  };
 
   //cargar el estado solo la primera vez al montar el componente
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(cargarLista,[]);
+  useEffect(cargarLista, []);
   //guardar el estado cuando tasks es modificado
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(guardarLista,[tasks]);
+  useEffect(guardarLista, [tasks]);
 
   return (
     <TaskContext.Provider value={ContextValue}>
@@ -121,7 +117,7 @@ export default function TaskList() {
                 <Button
                   variant="outlined"
                   onClick={() => {
-                    abrirFormulario(null)
+                    abrirFormulario(null);
                   }}
                 >
                   Agregar Tarea
@@ -131,26 +127,25 @@ export default function TaskList() {
           </Grid>
 
           <Grid item xs={8}>
-            {
-              (tasks.length > 0) ? (
-                tasks.map((x) => { return <TaskItem task={x} key={`TaskItem_${x.id}`} /> })
-              ) : (
-                <Typography sx={{ fontSize: 24 }} color="text.secondary" bgcolor={"whitesmoke"} gutterBottom>
-                  No tienes tareas pendientes!
-                </Typography>
-              )
-            }
+            {tasks.length > 0 ? (
+              tasks.map((x) => {
+                return <TaskItem task={x} key={`TaskItem_${x.id}`} />;
+              })
+            ) : (
+              <Typography
+                sx={{ fontSize: 24 }}
+                color="text.secondary"
+                bgcolor={"whitesmoke"}
+                gutterBottom
+              >
+                No tienes tareas pendientes!
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </Box>
 
-      <div>
-        {mostrarForm && (
-          <TaskForm
-            tarea={tareaSeleccionada}
-          />
-        )}
-      </div>
+      <div>{mostrarForm && <TaskForm tarea={tareaSeleccionada} />}</div>
     </TaskContext.Provider>
   );
 }

@@ -16,9 +16,10 @@ import { TaskContext } from "../../TaskList";
 import "./TaskForm.css";
 
 export default function TaskForm(props) {
-  const { abrirFormulario, agregarTarea, editarTarea } = useContext(TaskContext)
-  const {tarea} = props
-  
+  const { abrirFormulario, agregarTarea, editarTarea } =
+    useContext(TaskContext);
+  const { tarea } = props;
+
   TaskForm.propTypes = {
     tarea: PropTypes.object,
   };
@@ -64,7 +65,7 @@ export default function TaskForm(props) {
         </DialogContent>
         <DialogActions>
           <Button
-            disabled={miTarea.nombre===""} //No permitir añadir una tarea sin nombre
+            disabled={miTarea.nombre === ""} //No permitir añadir una tarea sin nombre
             variant="outlined"
             type="submit"
           >

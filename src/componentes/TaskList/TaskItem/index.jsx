@@ -12,10 +12,10 @@ import { TaskContext } from "../../TaskList";
 import "./TaskItem.css";
 
 export default function TaskItem(props) {
- 
   const { task } = props;
 
-  const { abrirFormulario, editarTarea, eliminarTarea } =  useContext(TaskContext);
+  const { abrirFormulario, editarTarea, eliminarTarea } =
+    useContext(TaskContext);
 
   TaskItem.propTypes = {
     task: PropTypes.object.isRequired,
@@ -71,8 +71,8 @@ export default function TaskItem(props) {
                     color="error"
                     onClick={() => eliminarTarea(task)}
                   >
-                    <DeleteForeverIcon/>
-                    <DeleteForeverIcon/>
+                    <DeleteForeverIcon />
+                    <DeleteForeverIcon />
                   </Button>
                 </Grid>
                 {!task.completado && (
@@ -83,8 +83,8 @@ export default function TaskItem(props) {
                       color="warning"
                       onClick={() => abrirFormulario(task)}
                     >
-                      <EditIcon/>
-                      <EditIcon/>
+                      <EditIcon />
+                      <EditIcon />
                     </Button>
                   </Grid>
                 )}
